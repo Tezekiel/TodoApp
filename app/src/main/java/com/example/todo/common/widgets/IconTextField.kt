@@ -41,7 +41,7 @@ fun IconTextField(
     BasicTextField(
       value = text,
       onValueChange = { onTextChanged(it) },
-      textStyle = MaterialTheme.typography.labelMedium
+      textStyle = MaterialTheme.typography.labelMedium.copy(color = MaterialTheme.colorScheme.onSurface),
     )
   }
 }

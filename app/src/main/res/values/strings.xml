@@ -7,4 +7,7 @@
     <string name="discard_new_appointment_changes_content_desc">Cancel new appointment</string>
     <string name="cancel_new_appointment_content_desc">Cancel new appointment</string>
     <string name="save_new_appointment_content_desc">Save new appointment</string>
+    <string name="select_location_default">Select location</string>
+    <string name="select_location_content_desc">Select location dropdown</string>
+    <string name="pick_location">Pick location</string>
 </resources>

@@ -72,7 +72,7 @@ fun EditableAppointmentCard(
       ) { description = it }
       DatePicker(value = date, onValueChange = { date = it }, isEditable = true)
       TimePicker(value = time, onValueChange = { time = it }, isEditable = true)
-      LocationDropdown(isEditable = true) { location = it }
+      LocationDropdown(isEditable = true, selectedLocation = location) { location = it }
       Row(horizontalArrangement = Arrangement.SpaceBetween) {
         IconButton(onClick = { onSave(Appointment(-1, description, location, date, time)) }) {
           Icon(

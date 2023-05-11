@@ -58,11 +58,11 @@ fun AppointmentCard(
       ) {
         IconText(
           icon = Icons.Default.Edit,
-          text = stringResource(R.string.your_appointment_description_goes_here),
+          text = appointment.description,
         )
         DatePicker(value = appointment.date)
         TimePicker(value = appointment.time)
-        LocationDropdown()
+        LocationDropdown(selectedLocation = appointment.location)
       }
     }
   }

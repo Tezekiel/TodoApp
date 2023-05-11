@@ -6,7 +6,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.EditCalendar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -35,4 +37,10 @@ fun DatePicker(
     contentDesc = "Date picker",
     text = "Date of appointment: $value",
   )
+}
+
+@Composable
+@Preview(showBackground = true)
+fun DatePickerPreview() {
+  DatePicker(value = "2021-10-10")
 }
