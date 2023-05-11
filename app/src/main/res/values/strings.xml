@@ -3,4 +3,7 @@
     <string name="app_title">My appointments</string>
     <string name="add_new_appointment">Add new appointment</string>
     <string name="change_theme_content_desc">Change theme</string>
+    <string name="your_appointment_description_goes_here">Your appointment description goes here</string>
+    <string name="cancel_new_appointment_content_desc">Cancel new appointment</string>
+    <string name="save_new_appointment_content_desc">Save new appointment</string>
 </resources>

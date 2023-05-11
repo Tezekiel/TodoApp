@@ -15,6 +15,7 @@ fun DatePicker(
   value: String,
   onValueChange: (String) -> Unit = {},
   pattern: String = "yyyy-MM-dd",
+  isEditable: Boolean = false,
 ) {
   val formatter = DateTimeFormatter.ofPattern(pattern)
   val date = if (value.isNotBlank()) LocalDate.parse(value, formatter) else LocalDate.now()
@@ -29,7 +30,7 @@ fun DatePicker(
   )
 
   IconText(
-    modifier = Modifier.clickable { dialog.show() },
+    modifier = if (isEditable) {Modifier.clickable { dialog.show() }} else Modifier,
     icon = Icons.Outlined.EditCalendar,
     contentDesc = "Date picker",
     text = "Date of appointment: $value",

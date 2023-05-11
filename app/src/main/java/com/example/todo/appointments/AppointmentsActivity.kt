@@ -20,11 +20,10 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import com.example.todo.appointments.widget.Appointments
+import com.example.todo.appointments.widget.AppointmentsScreen
 import com.example.todo.appointments.widget.ThemeIcon
 import com.example.todo.common.theme.TodoTheme
 import com.example.todo.common.widgets.CollapsedTopBar
-import org.koin.androidx.scope.scope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -50,17 +49,13 @@ class AppointmentsActivity : ComponentActivity() {
           },
         ) { padding ->
           Surface(
-            modifier = Modifier
-              .fillMaxSize()
-              .padding(padding),
+            modifier = Modifier.fillMaxSize().padding(padding),
             color = MaterialTheme.colorScheme.background
           ) {
             LaunchedEffect(key1 = Unit) {
-              viewModel.errors.collect { error ->
-                snackbarHostState.showSnackbar(error)
-              }
+              viewModel.errors.collect { error -> snackbarHostState.showSnackbar(error) }
             }
-            Appointments(listState = listState, appointments = viewModel.appointments)
+            AppointmentsScreen(listState = listState, viewModel = viewModel)
           }
         }
       }

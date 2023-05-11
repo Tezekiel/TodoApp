@@ -6,4 +6,5 @@ data class Appointment(
   val location: String,
   val date: String,
   val time: String,
+  val isEditing: Boolean = false
 )

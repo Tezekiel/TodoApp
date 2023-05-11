@@ -16,6 +16,7 @@ fun TimePicker(
   onValueChange: (String) -> Unit,
   pattern: String = "HH:mm",
   is24HourView: Boolean = true,
+  isEditable: Boolean = false,
 ) {
   val formatter = DateTimeFormatter.ofPattern(pattern)
   val time = if (value.isNotBlank()) LocalTime.parse(value, formatter) else LocalTime.now()
@@ -28,7 +29,7 @@ fun TimePicker(
   )
 
   IconText(
-    modifier = Modifier.clickable { dialog.show() },
+    modifier = if (isEditable) {Modifier.clickable { dialog.show() }} else Modifier,
     icon = Icons.Default.Timer,
     contentDesc = "Date picker",
     text = "Time of appointment: $value",

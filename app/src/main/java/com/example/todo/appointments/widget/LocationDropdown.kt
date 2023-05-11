@@ -1,6 +1,5 @@
 package com.example.todo.appointments.widget
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.icons.Icons
@@ -23,11 +22,13 @@ import com.example.todo.common.widgets.IconText
 fun LocationDropdown(
   modifier: Modifier = Modifier,
   locations: List<String> = locationOptions,
+  isEditable: Boolean = false,
+  onSelected: (String) -> Unit = {}
 ) {
   var expanded by remember { mutableStateOf(false) }
   Column(modifier = modifier) {
     IconText(
-      modifier = Modifier.clickable { expanded = !expanded  },
+      modifier = if (isEditable) {Modifier.clickable { expanded = !expanded  }} else Modifier,
       icon = Icons.Default.LocationOn,
       contentDesc = "Date picker",
       text = "Select location",
@@ -41,11 +42,10 @@ fun LocationDropdown(
       locations.map {
         DropdownMenuItem(
           text = { Text(it) },
-          onClick = { Log.d("karlo", "AppointmentRow: $it") }
+          onClick = { onSelected(it) }
         )
       }
     }
-    //todo add error state
   }
 
 }
