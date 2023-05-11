@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Appointments</string>
     <string name="app_title">My appointments</string>
+    <string name="add_new_appointment">Add new appointment</string>
+    <string name="change_theme_content_desc">Change theme</string>
 </resources>

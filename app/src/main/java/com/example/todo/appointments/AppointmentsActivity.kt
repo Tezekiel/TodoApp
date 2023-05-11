@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -15,8 +16,9 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import com.example.todo.common.theme.TodoTheme
 import com.example.todo.appointments.widget.Appointments
+import com.example.todo.appointments.widget.ThemeIcon
+import com.example.todo.common.theme.TodoTheme
 import com.example.todo.common.widgets.CollapsedTopBar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -33,8 +35,13 @@ class AppointmentsActivity : ComponentActivity() {
           derivedStateOf { listState.firstVisibleItemIndex > 0 }
         }
         Scaffold(
-          topBar = { CollapsedTopBar(isCollapsed = isCollapsed) })
-        { padding ->
+          topBar = { CollapsedTopBar(isCollapsed = isCollapsed) },
+          floatingActionButton = {
+            IconButton(onClick = { viewModel.isDarkMode = !viewModel.isDarkMode }) {
+              ThemeIcon(viewModel.isDarkMode)
+            }
+          },
+        ) { padding ->
           Surface(
             modifier = Modifier
               .fillMaxSize()

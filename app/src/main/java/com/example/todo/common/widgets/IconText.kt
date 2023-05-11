@@ -22,8 +22,8 @@ import androidx.compose.ui.unit.sp
 fun IconText(
   modifier: Modifier = Modifier,
   icon: ImageVector = Icons.Outlined.DateRange,
-  contentDesc: String = "Calendar Icon",
-  text: String = "10.11.2022."
+  text: String = "10.11.2022.",
+  contentDesc: String = text,
 ) {
   Row(
     modifier = modifier.fillMaxWidth(),
