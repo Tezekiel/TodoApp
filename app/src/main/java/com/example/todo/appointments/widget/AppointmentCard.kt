@@ -60,6 +60,7 @@ fun AppointmentCard(
 fun AppointmentRowPreview() {
   AppointmentCard(
     appointment = Appointment(
+      22,
       "Doctors appointment",
       "123 Main St",
       "2021-09-01",
