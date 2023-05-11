@@ -1,4 +1,4 @@
-package com.example.todo.widget
+package com.example.todo.common.widgets
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState

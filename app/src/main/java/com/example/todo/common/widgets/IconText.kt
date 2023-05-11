@@ -1,4 +1,4 @@
-package com.example.todo.widget
+package com.example.todo.common.widgets
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth

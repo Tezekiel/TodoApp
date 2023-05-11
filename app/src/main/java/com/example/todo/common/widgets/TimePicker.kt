@@ -1,13 +1,9 @@
-package com.example.todo.widget
+package com.example.todo.common.widgets
 
 import android.app.TimePickerDialog
 import androidx.compose.foundation.clickable
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.LockClock
 import androidx.compose.material.icons.filled.Timer
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext

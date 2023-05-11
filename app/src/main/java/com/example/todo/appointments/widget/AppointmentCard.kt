@@ -1,4 +1,4 @@
-package com.example.todo.widget
+package com.example.todo.appointments.widget
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,8 +17,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.todo.helpers.nowDate
-import com.example.todo.helpers.nowTime
+import com.example.todo.common.helpers.nowDate
+import com.example.todo.common.helpers.nowTime
+import com.example.todo.common.widgets.DatePicker
+import com.example.todo.common.widgets.IconText
+import com.example.todo.common.widgets.TimePicker
 
 @Composable
 fun AppointmentCard(
