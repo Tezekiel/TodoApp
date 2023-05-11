@@ -9,10 +9,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.outlined.Cancel
 import androidx.compose.material.icons.outlined.Check
+import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.outlined.Delete
-import androidx.compose.material.icons.outlined.Paid
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -35,16 +34,25 @@ import com.example.todo.common.widgets.IconTextField
 import com.example.todo.common.widgets.TimePicker
 
 @Composable
-fun EmptyAppointmentCard(
+fun EditableAppointmentCard(
   modifier: Modifier = Modifier,
+  appointment: Appointment,
   onSave: (Appointment) -> Unit,
-  onDiscard: () -> Unit,
+  onDelete: (Int) -> Unit,
+  onDiscard: (Int) -> Unit,
 ) {
-  val descriptionDefault = stringResource(R.string.your_appointment_description_goes_here)
-  var date: String by remember { mutableStateOf(nowDate()) }
-  var time: String by remember { mutableStateOf(nowTime()) }
+  val descriptionDefault =
+    appointment.description.ifBlank {
+      stringResource(R.string.your_appointment_description_goes_here)
+    }
+  val dateDefault = appointment.date.ifBlank { nowDate() }
+  val timeDefault = appointment.time.ifBlank { nowTime() }
+  val locationDefault = appointment.location.ifBlank { "" }
+
+  var date: String by remember { mutableStateOf(dateDefault) }
+  var time: String by remember { mutableStateOf(timeDefault) }
   var description: String by remember { mutableStateOf(descriptionDefault) }
-  var location: String by remember { mutableStateOf("") }
+  var location: String by remember { mutableStateOf(locationDefault) }
 
   Card(
     shape = RoundedCornerShape(8.dp),
@@ -72,11 +80,19 @@ fun EmptyAppointmentCard(
             contentDescription = stringResource(R.string.save_new_appointment_content_desc)
           )
         }
-        IconButton(onClick = { onDiscard() }) {
+        IconButton(onClick = { onDelete(appointment.id) }) {
           Icon(
             imageVector = Icons.Outlined.Delete,
             contentDescription = stringResource(R.string.cancel_new_appointment_content_desc)
           )
+        }
+        if (appointment.id > 0) {
+          IconButton(onClick = { onDiscard(appointment.id) }) {
+            Icon(
+              imageVector = Icons.Outlined.Close,
+              contentDescription = stringResource(R.string.discard_new_appointment_changes_content_desc)
+            )
+          }
         }
       }
     }

@@ -20,13 +20,14 @@ fun AppointmentsScreen(
   ) {
     item { ExpandedTopBar() }
     viewModel.appointments.forEach { appointment ->
-      item { AppointmentCard(appointment = appointment, isEditable = false) }
-    }
-    viewModel.emptyAppointment?.let {
       item {
-        EmptyAppointmentCard(
-          onSave = { viewModel.saveAppointment(it) },
-          onDiscard = { viewModel.discardNewAppointment() },
+        AppointmentCard(
+          appointment = appointment,
+          isEditing = appointment.isEditing,
+          onSave = { viewModel.validateAndSave(it) },
+          onDelete = { viewModel.delete(it) },
+          onDiscard = { viewModel.discardChanges(it) },
+          onStartEditing = { viewModel.startEditing(it) },
         )
       }
     }

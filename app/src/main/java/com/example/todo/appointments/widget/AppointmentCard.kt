@@ -1,5 +1,6 @@
 package com.example.todo.appointments.widget
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,50 +21,49 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.todo.R
 import com.example.todo.appointments.model.Appointment
-import com.example.todo.common.helpers.nowDate
-import com.example.todo.common.helpers.nowTime
 import com.example.todo.common.widgets.DatePicker
 import com.example.todo.common.widgets.IconText
-import com.example.todo.common.widgets.IconTextField
 import com.example.todo.common.widgets.TimePicker
 
 @Composable
 fun AppointmentCard(
   modifier: Modifier = Modifier,
   appointment: Appointment,
-  isEditable: Boolean = false
+  onStartEditing: (Int) -> Unit,
+  isEditing: Boolean = false,
+  onSave: (Appointment) -> Unit,
+  onDelete: (Int) -> Unit,
+  onDiscard: (Int) -> Unit,
 ) {
-  var date: String by remember { mutableStateOf(nowDate()) }
-  var time: String by remember { mutableStateOf(nowTime()) }
-  var newCard: Appointment? by remember { mutableStateOf(null) }
 
-  Card(
-    shape = RoundedCornerShape(8.dp),
-    modifier = modifier
-      .fillMaxWidth()
-      .padding(16.dp, 8.dp),
-    elevation = CardDefaults.elevatedCardElevation(defaultElevation = 8.dp)
-  ) {
-    Column(
-      modifier = Modifier.padding(8.dp),
-      verticalArrangement = Arrangement.spacedBy(4.dp)
+  if (isEditing) {
+    EditableAppointmentCard(
+      appointment = appointment,
+      onSave = onSave,
+      onDelete = onDelete,
+      onDiscard = onDiscard,
+    )
+  } else {
+    Card(
+      shape = RoundedCornerShape(8.dp),
+      modifier = modifier
+        .fillMaxWidth()
+        .padding(16.dp, 8.dp)
+        .clickable { onStartEditing(appointment.id) },
+      elevation = CardDefaults.elevatedCardElevation(defaultElevation = 8.dp)
     ) {
-      if (isEditable) {
+      Column(
+        modifier = Modifier.padding(8.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp)
+      ) {
         IconText(
           icon = Icons.Default.Edit,
           text = stringResource(R.string.your_appointment_description_goes_here),
         )
-      } else {
-        IconTextField(
-          icon = Icons.Default.Edit,
-          text = newCard?.description ?: stringResource(R.string.your_appointment_description_goes_here),
-        ){
-          newCard?.copy(description = it)
-        }
+        DatePicker(value = appointment.date)
+        TimePicker(value = appointment.time)
+        LocationDropdown()
       }
-      DatePicker(value = date, onValueChange = { date = it }, isEditable = isEditable)
-      TimePicker(value = time, onValueChange = { time = it }, isEditable = isEditable)
-      LocationDropdown(isEditable = isEditable)
     }
   }
 }
@@ -79,6 +79,9 @@ fun AppointmentRowPreview() {
       "2021-09-01",
       "12:00"
     ),
-    isEditable = false
+    onSave = {},
+    onDiscard = {},
+    onDelete = {},
+    onStartEditing = {}
   )
 }

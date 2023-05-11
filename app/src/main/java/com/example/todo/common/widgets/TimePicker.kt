@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun TimePicker(
   value: String,
-  onValueChange: (String) -> Unit,
+  onValueChange: (String) -> Unit = {},
   pattern: String = "HH:mm",
   is24HourView: Boolean = true,
   isEditable: Boolean = false,
