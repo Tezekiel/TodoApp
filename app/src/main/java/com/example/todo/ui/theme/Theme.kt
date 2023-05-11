@@ -14,33 +14,37 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import androidx.compose.ui.graphics.Color
 
-private val DarkColorScheme = darkColorScheme(
-  primary = Purple80,
-  secondary = PurpleGrey80,
-  tertiary = Pink80
+val LightColors = lightColorScheme(
+  primary = Color(0xFF6200EE),
+  secondary = Color(0xFF03DAC6),
+  background = Color(0xFFFFFFFF),
+  surface = Color(0xFFFFFFFF),
+  error = Color(0xFFB00020),
+  onPrimary = Color(0xFFFFFFFF),
+  onSecondary = Color(0xFF000000),
+  onBackground = Color(0xFF000000),
+  onSurface = Color(0xFF000000),
+  onError = Color(0xFFFFFFFF)
 )
 
-private val LightColorScheme = lightColorScheme(
-  primary = Purple40,
-  secondary = PurpleGrey40,
-  tertiary = Pink40
-
-  /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+val DarkColors = darkColorScheme(
+  primary = Color(0xFFBB86FC),
+  secondary = Color(0xFF03DAC6),
+  background = Color(0xFF121212),
+  surface = Color(0xFF121212),
+  error = Color(0xFFCF6679),
+  onPrimary = Color(0xFF000000),
+  onSecondary = Color(0xFF000000),
+  onBackground = Color(0xFFFFFFFF),
+  onSurface = Color(0xFFFFFFFF),
+  onError = Color(0xFF000000)
 )
 
 @Composable
 fun TodoTheme(
   darkTheme: Boolean = isSystemInDarkTheme(),
-  // Dynamic color is available on Android 12+
   dynamicColor: Boolean = true,
   content: @Composable () -> Unit
 ) {
@@ -50,8 +54,8 @@ fun TodoTheme(
       if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
     }
 
-    darkTheme -> DarkColorScheme
-    else -> LightColorScheme
+    darkTheme -> DarkColors
+    else -> LightColors
   }
   val view = LocalView.current
   if (!view.isInEditMode) {
