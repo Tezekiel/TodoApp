@@ -21,7 +21,7 @@ import com.example.todo.helpers.nowDate
 import com.example.todo.helpers.nowTime
 
 @Composable
-fun AppointmentRow(
+fun AppointmentCard(
   modifier: Modifier = Modifier
 ) {
   var date: String by remember { mutableStateOf(nowDate()) }
@@ -31,7 +31,7 @@ fun AppointmentRow(
     shape = RoundedCornerShape(8.dp),
     modifier = modifier
       .fillMaxWidth()
-      .padding(0.dp, 8.dp),
+      .padding(16.dp, 8.dp),
     elevation = CardDefaults.elevatedCardElevation(defaultElevation = 8.dp)
   ) {
     Column(
@@ -53,5 +53,5 @@ fun AppointmentRow(
 @Preview(showBackground = true)
 @Composable
 fun AppointmentRowPreview() {
-  AppointmentRow()
+  AppointmentCard()
 }
