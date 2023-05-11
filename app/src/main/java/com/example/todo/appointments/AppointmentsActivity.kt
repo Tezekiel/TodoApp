@@ -1,6 +1,4 @@
-@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
-
-package com.example.todo
+package com.example.todo.appointments
 
 
 import android.os.Bundle
@@ -17,18 +15,19 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import com.example.todo.ui.theme.TodoTheme
+import com.example.todo.common.theme.TodoTheme
 import com.example.todo.appointments.widget.Appointments
 import com.example.todo.common.widgets.CollapsedTopBar
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : ComponentActivity() {
+@OptIn(ExperimentalMaterial3Api::class)
+class AppointmentsActivity : ComponentActivity() {
+  private val viewModel: AppointmentsViewModel by viewModel()
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    // todo move somewhere else
-    val isDark = true
-
     setContent {
-      TodoTheme(darkTheme = isDark) {
+      TodoTheme(darkTheme = viewModel.isDarkMode) {
         val listState = rememberLazyListState()
         val isCollapsed: Boolean by remember {
           derivedStateOf { listState.firstVisibleItemIndex > 0 }
@@ -37,10 +36,12 @@ class MainActivity : ComponentActivity() {
           topBar = { CollapsedTopBar(isCollapsed = isCollapsed) })
         { padding ->
           Surface(
-            modifier = Modifier.fillMaxSize().padding(padding),
+            modifier = Modifier
+              .fillMaxSize()
+              .padding(padding),
             color = MaterialTheme.colorScheme.background
           ) {
-            Appointments(listState)
+            Appointments(listState = listState, appointments = viewModel.appointments)
           }
         }
       }

@@ -17,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.todo.appointments.model.Appointment
 import com.example.todo.common.helpers.nowDate
 import com.example.todo.common.helpers.nowTime
 import com.example.todo.common.widgets.DatePicker
@@ -25,7 +26,8 @@ import com.example.todo.common.widgets.TimePicker
 
 @Composable
 fun AppointmentCard(
-  modifier: Modifier = Modifier
+  modifier: Modifier = Modifier,
+  appointment: Appointment
 ) {
   var date: String by remember { mutableStateOf(nowDate()) }
   var time: String by remember { mutableStateOf(nowTime()) }
@@ -56,5 +58,12 @@ fun AppointmentCard(
 @Preview(showBackground = true)
 @Composable
 fun AppointmentRowPreview() {
-  AppointmentCard()
+  AppointmentCard(
+    appointment = Appointment(
+      "Doctors appointment",
+      "123 Main St",
+      "2021-09-01",
+      "12:00"
+    )
+  )
 }
