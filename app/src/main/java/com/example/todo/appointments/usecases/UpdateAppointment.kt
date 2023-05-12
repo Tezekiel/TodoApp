@@ -13,7 +13,7 @@ class UpdateAppointment(
 
   suspend operator fun invoke(appointment: Appointment) {
     withContext(Dispatchers.IO) {
-      Result.success(dao.updateAppointment(appointment.toEntity()))
+      dao.updateAppointment(appointment.toEntity())
     }
   }
 }

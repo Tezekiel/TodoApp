@@ -1,5 +1,6 @@
 package com.example.todo.appointments
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -22,7 +23,6 @@ class AppointmentsViewModel(
   private val validateAppointment: ValidateAppointment,
   private val saveAppointment: SaveAppointment,
   private val deleteAppointment: DeleteAppointment,
-  private val updateAppointment: UpdateAppointment,
 ) : ViewModel() {
 
   val errors = MutableSharedFlow<String>()
@@ -30,12 +30,7 @@ class AppointmentsViewModel(
   var appointments: List<Appointment> by mutableStateOf(emptyList())
 
   init {
-    viewModelScope.launch {
-      getAppointments().fold(
-        onSuccess = { appointments = it },
-        onFailure = { errors.emit(it.message.toString()) }
-      )
-    }
+    viewModelScope.launch { appointments = getAppointments() }
   }
 
   fun createEmptyAppointment() {
@@ -44,20 +39,16 @@ class AppointmentsViewModel(
 
   fun validateAndSave(new: Appointment) {
     when (val res = validateAppointment(new)) {
-      is AppointmentValidationResult.Failure -> errors.tryEmit(res.message)
+      is AppointmentValidationResult.Failure -> viewModelScope.launch { errors.emit(res.message) }
       AppointmentValidationResult.Success -> save(new)
     }
   }
 
   private fun save(new: Appointment) {
     viewModelScope.launch {
-      saveAppointment(new).fold(
-        onSuccess = {
-          deleteCached(new.id)
-          appointments = appointments + it
-        },
-        onFailure = { errors.emit(it.message.toString()) }
-      )
+      val res = saveAppointment(new)
+      deleteCached(new.id)
+      appointments = appointments + res
     }
   }
 

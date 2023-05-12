@@ -10,9 +10,9 @@ class GetAppointmentById(
   private val dao: AppointmentDao
 ) {
 
-  suspend operator fun invoke(appointment: Appointment): Result<Appointment> {
+  suspend operator fun invoke(appointment: Appointment): Appointment {
     return withContext(Dispatchers.IO) {
-      Result.success(dao.getById(appointment.id).toDomain())
+      dao.getById(appointment.id).toDomain()
     }
   }
 }

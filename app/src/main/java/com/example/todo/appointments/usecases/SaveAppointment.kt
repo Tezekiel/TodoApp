@@ -11,10 +11,15 @@ class SaveAppointment(
   private val dao: AppointmentDao
 ) {
 
-  suspend operator fun invoke(new: Appointment): Result<Appointment> {
+  suspend operator fun invoke(new: Appointment): Appointment {
     return withContext(Dispatchers.IO) {
-      val id = dao.insert(new.toEntity(true))
-      Result.success(dao.getById(id).toDomain())
+      val id = if (new.id < 0) {
+        dao.insert(new.toEntity(true))
+      } else {
+        dao.updateAppointment(new.toEntity())
+        new.id
+      }
+      dao.getById(id).toDomain()
     }
   }
 }

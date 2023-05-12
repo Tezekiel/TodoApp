@@ -10,9 +10,9 @@ class GetAppointments(
   private val dao: AppointmentDao
 ) {
 
-  suspend operator fun invoke(): Result<List<Appointment>> {
+  suspend operator fun invoke(): List<Appointment> {
     return withContext(Dispatchers.IO) {
-      Result.success(dao.getAll().map { it.toDomain() })
+      dao.getAll().map { it.toDomain() }
     }
   }
 }
