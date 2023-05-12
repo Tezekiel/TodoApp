@@ -38,8 +38,8 @@ fun EditableAppointmentCard(
   modifier: Modifier = Modifier,
   appointment: Appointment,
   onSave: (Appointment) -> Unit,
-  onDelete: (Int) -> Unit,
-  onDiscard: (Int) -> Unit,
+  onDelete: (Long) -> Unit,
+  onDiscard: (Long) -> Unit,
 ) {
   val descriptionDefault =
     appointment.description.ifBlank {

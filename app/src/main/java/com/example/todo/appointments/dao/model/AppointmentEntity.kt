@@ -7,7 +7,7 @@ import com.example.todo.appointments.model.Appointment
 
 @Entity
 data class AppointmentEntity(
-  @PrimaryKey(autoGenerate = true) val id: Int,
+  @PrimaryKey(autoGenerate = true) val id: Long,
   @ColumnInfo(name = "description") val description: String,
   @ColumnInfo(name = "location") val location: String,
   @ColumnInfo(name = "date") val date: String,

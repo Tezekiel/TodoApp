@@ -29,11 +29,11 @@ import com.example.todo.common.widgets.TimePicker
 fun AppointmentCard(
   modifier: Modifier = Modifier,
   appointment: Appointment,
-  onStartEditing: (Int) -> Unit,
+  onStartEditing: (Long) -> Unit,
   isEditing: Boolean = false,
   onSave: (Appointment) -> Unit,
-  onDelete: (Int) -> Unit,
-  onDiscard: (Int) -> Unit,
+  onDelete: (Long) -> Unit,
+  onDiscard: (Long) -> Unit,
 ) {
 
   if (isEditing) {

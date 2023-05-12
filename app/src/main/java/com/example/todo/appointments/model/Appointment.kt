@@ -3,7 +3,7 @@ package com.example.todo.appointments.model
 import com.example.todo.appointments.dao.model.AppointmentEntity
 
 data class Appointment(
-  val id: Int,
+  val id: Long,
   val description: String,
   val location: String,
   val date: String,
@@ -11,8 +11,8 @@ data class Appointment(
   val isEditing: Boolean = false
 )
 
-fun Appointment.toEntity() = AppointmentEntity(
-  id = 0,
+fun Appointment.toEntity(resetId: Boolean = false) = AppointmentEntity(
+  id = if (resetId) 0 else id,
   description = description,
   location = location,
   date = date,

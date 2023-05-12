@@ -7,8 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.todo.appointments.model.Appointment
 import com.example.todo.appointments.usecases.AppointmentValidationResult
+import com.example.todo.appointments.usecases.DeleteAppointment
 import com.example.todo.appointments.usecases.GetAppointments
 import com.example.todo.appointments.usecases.SaveAppointment
+import com.example.todo.appointments.usecases.UpdateAppointment
 import com.example.todo.appointments.usecases.ValidateAppointment
 import com.example.todo.common.helpers.nowDate
 import com.example.todo.common.helpers.nowTime
@@ -19,6 +21,8 @@ class AppointmentsViewModel(
   private val getAppointments: GetAppointments,
   private val validateAppointment: ValidateAppointment,
   private val saveAppointment: SaveAppointment,
+  private val deleteAppointment: DeleteAppointment,
+  private val updateAppointment: UpdateAppointment,
 ) : ViewModel() {
 
   val errors = MutableSharedFlow<String>()
@@ -49,27 +53,34 @@ class AppointmentsViewModel(
     viewModelScope.launch {
       saveAppointment(new).fold(
         onSuccess = {
-          delete(new.id)
-          appointments = appointments + new.copy(id = it.toInt(), isEditing = false)
+          deleteCached(new.id)
+          appointments = appointments + it
         },
         onFailure = { errors.emit(it.message.toString()) }
       )
     }
   }
 
-  fun delete(id: Int) {
+  private fun deleteCached(id: Long) {
     appointments = appointments.toMutableList().filter { it.id != id }
   }
 
-  fun discardChanges(id: Int) {
+  fun discardChanges(id: Long) {
     appointments = appointments.map {
       if (it.id == id) it.copy(isEditing = false) else it
     }
   }
 
-  fun startEditing(id: Int) {
+  fun startEditing(id: Long) {
     appointments = appointments.map {
       if (it.id == id) it.copy(isEditing = true) else it
+    }
+  }
+
+  fun delete(it: Long) {
+    viewModelScope.launch {
+      deleteAppointment(it)
+      deleteCached(it)
     }
   }
 

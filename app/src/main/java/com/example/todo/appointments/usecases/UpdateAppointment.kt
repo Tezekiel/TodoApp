@@ -7,14 +7,13 @@ import com.example.todo.appointments.model.toEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class SaveAppointment(
+class UpdateAppointment(
   private val dao: AppointmentDao
 ) {
 
-  suspend operator fun invoke(new: Appointment): Result<Appointment> {
-    return withContext(Dispatchers.IO) {
-      val id = dao.insert(new.toEntity(true))
-      Result.success(dao.getById(id).toDomain())
+  suspend operator fun invoke(appointment: Appointment) {
+    withContext(Dispatchers.IO) {
+      Result.success(dao.updateAppointment(appointment.toEntity()))
     }
   }
 }
