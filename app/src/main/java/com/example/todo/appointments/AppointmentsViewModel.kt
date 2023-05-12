@@ -50,11 +50,10 @@ class AppointmentsViewModel(
       saveAppointment(new).fold(
         onSuccess = {
           delete(new.id)
-          appointments = appointments + it
+          appointments = appointments + new.copy(id = it.toInt(), isEditing = false)
         },
         onFailure = { errors.emit(it.message.toString()) }
       )
-      delete(-1)
     }
   }
 
