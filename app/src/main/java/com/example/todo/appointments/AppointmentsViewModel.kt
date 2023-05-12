@@ -70,8 +70,8 @@ class AppointmentsViewModel(
 
   fun delete(it: Long) {
     viewModelScope.launch {
-      deleteAppointment(it)
       deleteCached(it)
+      deleteAppointment(it)
     }
   }
 
