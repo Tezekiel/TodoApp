@@ -30,10 +30,6 @@ fun AppointmentsScreen(
         onStartEditing = { viewModel.startEditing(it) },
       )
     }
-    item {
-      AddNewAppointmentButton {
-        viewModel.createEmptyAppointment()
-      }
-    }
+    item { AddNewAppointmentButton { viewModel.createEmptyAppointment() } }
   }
 }

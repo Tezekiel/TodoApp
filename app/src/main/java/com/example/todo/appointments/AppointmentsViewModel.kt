@@ -6,15 +6,13 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.todo.appointments.model.Appointment
-import com.example.todo.appointments.model.AppointmentState
-import com.example.todo.appointments.model.AppointmentState.*
+import com.example.todo.appointments.model.AppointmentState.PENDING
 import com.example.todo.appointments.usecases.AppointmentValidationResult
 import com.example.todo.appointments.usecases.DeleteAppointment
 import com.example.todo.appointments.usecases.GetAppointments
 import com.example.todo.appointments.usecases.SaveAppointment
 import com.example.todo.appointments.usecases.ValidateAppointment
-import com.example.todo.common.helpers.nowDate
-import com.example.todo.common.helpers.nowTime
+import com.example.todo.common.helpers.GetNow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 
@@ -23,11 +21,22 @@ class AppointmentsViewModel(
   private val validateAppointment: ValidateAppointment,
   private val saveAppointment: SaveAppointment,
   private val deleteAppointment: DeleteAppointment,
+  getNow: GetNow,
 ) : ViewModel() {
 
   val errors = MutableSharedFlow<String>()
   var isDarkMode: Boolean by mutableStateOf(true)
   var appointments: List<Appointment> by mutableStateOf(emptyList())
+
+  private val defaultAppointment = Appointment(
+    0,
+    "Your appointment description goes here",
+    "",
+    getNow.getDate(),
+    getNow.getTime(1),
+    isEditing = true,
+    state = PENDING
+  )
 
   init {
     viewModelScope.launch { appointments = getAppointments() }
@@ -38,7 +47,7 @@ class AppointmentsViewModel(
       viewModelScope.launch { errors.emit("Please save or discard the current appointment") }
       return
     }
-    appointments = appointments + Appointment(0, "", "", nowDate(), nowTime(1), isEditing = true, state = PENDING)
+    appointments = appointments + defaultAppointment
   }
 
   fun validateAndSave(new: Appointment) {

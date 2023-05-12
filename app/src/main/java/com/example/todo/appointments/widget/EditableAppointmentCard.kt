@@ -27,8 +27,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.todo.R
 import com.example.todo.appointments.model.Appointment
-import com.example.todo.common.helpers.nowDate
-import com.example.todo.common.helpers.nowTime
 import com.example.todo.common.widgets.DatePicker
 import com.example.todo.common.widgets.IconTextField
 import com.example.todo.common.widgets.TimePicker
@@ -41,16 +39,11 @@ fun EditableAppointmentCard(
   onDelete: (Long) -> Unit,
   onDiscard: (Long) -> Unit,
 ) {
-  val descriptionDefault =
-    appointment.description.ifBlank { stringResource(R.string.your_appointment_description_goes_here) }
-  val dateDefault = appointment.date.ifBlank { nowDate() }
-  val timeDefault = appointment.time.ifBlank { nowTime() }
-  val locationDefault = appointment.location.ifBlank { "" }
 
-  var date: String by remember { mutableStateOf(dateDefault) }
-  var time: String by remember { mutableStateOf(timeDefault) }
-  var description: String by remember { mutableStateOf(descriptionDefault) }
-  var location: String by remember { mutableStateOf(locationDefault) }
+  var date: String by remember { mutableStateOf(appointment.date) }
+  var time: String by remember { mutableStateOf(appointment.time) }
+  var description: String by remember { mutableStateOf(appointment.description) }
+  var location: String by remember { mutableStateOf(appointment.location) }
 
   Card(
     shape = RoundedCornerShape(8.dp),
