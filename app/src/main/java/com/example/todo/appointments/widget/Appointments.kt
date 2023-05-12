@@ -3,6 +3,7 @@ package com.example.todo.appointments.widget
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.todo.appointments.AppointmentsViewModel
@@ -19,17 +20,15 @@ fun AppointmentsScreen(
     modifier = Modifier.fillMaxSize()
   ) {
     item { ExpandedTopBar() }
-    viewModel.appointments.forEach { appointment ->
-      item {
-        AppointmentCard(
-          appointment = appointment,
-          isEditing = appointment.isEditing,
-          onSave = { viewModel.validateAndSave(it) },
-          onDelete = { viewModel.delete(it) },
-          onDiscard = { viewModel.discardChanges(it) },
-          onStartEditing = { viewModel.startEditing(it) },
-        )
-      }
+    items(viewModel.appointments, key = { it.id }) { appointment ->
+      AppointmentCard(
+        appointment = appointment,
+        isEditing = appointment.isEditing,
+        onSave = { viewModel.validateAndSave(it) },
+        onDelete = { viewModel.delete(it) },
+        onDiscard = { viewModel.discardChanges(it) },
+        onStartEditing = { viewModel.startEditing(it) },
+      )
     }
     item {
       AddNewAppointmentButton {

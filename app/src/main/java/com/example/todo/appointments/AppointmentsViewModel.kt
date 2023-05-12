@@ -1,17 +1,17 @@
 package com.example.todo.appointments
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.todo.appointments.model.Appointment
+import com.example.todo.appointments.model.AppointmentState
+import com.example.todo.appointments.model.AppointmentState.*
 import com.example.todo.appointments.usecases.AppointmentValidationResult
 import com.example.todo.appointments.usecases.DeleteAppointment
 import com.example.todo.appointments.usecases.GetAppointments
 import com.example.todo.appointments.usecases.SaveAppointment
-import com.example.todo.appointments.usecases.UpdateAppointment
 import com.example.todo.appointments.usecases.ValidateAppointment
 import com.example.todo.common.helpers.nowDate
 import com.example.todo.common.helpers.nowTime
@@ -34,7 +34,11 @@ class AppointmentsViewModel(
   }
 
   fun createEmptyAppointment() {
-    appointments = appointments + Appointment(-1, "", "", nowDate(), nowTime(1), isEditing = true)
+    if (appointments.any { it.isEditing }) {
+      viewModelScope.launch { errors.emit("Please save or discard the current appointment") }
+      return
+    }
+    appointments = appointments + Appointment(0, "", "", nowDate(), nowTime(1), isEditing = true, state = PENDING)
   }
 
   fun validateAndSave(new: Appointment) {
@@ -53,7 +57,7 @@ class AppointmentsViewModel(
   }
 
   private fun deleteCached(id: Long) {
-    appointments = appointments.toMutableList().filter { it.id != id }
+    appointments = appointments.filter { it.id != id }
   }
 
   fun discardChanges(id: Long) {

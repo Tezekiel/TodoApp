@@ -21,14 +21,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.todo.R
 import com.example.todo.appointments.model.Appointment
+import com.example.todo.appointments.model.AppointmentState
 import com.example.todo.common.widgets.DatePicker
 import com.example.todo.common.widgets.IconText
 import com.example.todo.common.widgets.TimePicker
 
 @Composable
 fun AppointmentCard(
-  modifier: Modifier = Modifier,
   appointment: Appointment,
+  modifier: Modifier = Modifier,
   onStartEditing: (Long) -> Unit,
   isEditing: Boolean = false,
   onSave: (Appointment) -> Unit,
@@ -77,7 +78,8 @@ fun AppointmentRowPreview() {
       "Doctors appointment",
       "123 Main St",
       "2021-09-01",
-      "12:00"
+      "12:00",
+      AppointmentState.DONE
     ),
     onSave = {},
     onDiscard = {},

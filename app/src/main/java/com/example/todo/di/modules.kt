@@ -4,4 +4,5 @@ val modules = listOf(
   usecaseModule,
   viewModelModule,
   daoModule,
+  otherModule
 )

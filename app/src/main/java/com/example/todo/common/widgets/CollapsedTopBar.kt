@@ -35,8 +35,8 @@ fun CollapsedTopBar(
       .background(color)
       .fillMaxWidth()
       .height(COLLAPSED_TOP_BAR_HEIGHT)
-      .padding(16.dp),
-    contentAlignment = Alignment.BottomStart
+      .padding(12.dp),
+    contentAlignment = Alignment.CenterStart
   ) {
     AnimatedVisibility(visible = isCollapsed) {
       Text(text = stringResource(R.string.app_title), style = MaterialTheme.typography.headlineSmall)

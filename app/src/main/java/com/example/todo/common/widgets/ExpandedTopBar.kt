@@ -24,10 +24,10 @@ fun ExpandedTopBar() {
       .background(MaterialTheme.colorScheme.primary)
       .fillMaxWidth()
       .height(EXPANDED_TOP_BAR_HEIGHT - COLLAPSED_TOP_BAR_HEIGHT),
-    contentAlignment = Alignment.BottomStart
+    contentAlignment = Alignment.CenterStart
   ) {
     Text(
-      modifier = Modifier.padding(16.dp),
+      modifier = Modifier.padding(12.dp),
       text = stringResource(R.string.app_title),
       color = MaterialTheme.colorScheme.onPrimary,
       style = MaterialTheme.typography.headlineMedium,

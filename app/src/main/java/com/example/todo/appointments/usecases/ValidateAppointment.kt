@@ -7,11 +7,13 @@ class ValidateAppointment {
 
   operator fun invoke(new: Appointment): AppointmentValidationResult {
     with(new) {
-      if (description.isBlank()) return Failure("Description cannot be blank")
-      if (location.isBlank()) return Failure("Location cannot be blank")
-      if (date.isBlank()) return Failure("Date cannot be blank")
-      if (time.isBlank()) return Failure("Time cannot be blank")
-      return AppointmentValidationResult.Success
+      return when {
+        description.isBlank() -> Failure("Description cannot be blank")
+        location.isBlank() -> Failure("Location cannot be blank")
+        date.isBlank() -> Failure("Date cannot be blank")
+        time.isBlank() -> Failure("Time cannot be blank")
+        else -> AppointmentValidationResult.Success
+      }
     }
   }
 }

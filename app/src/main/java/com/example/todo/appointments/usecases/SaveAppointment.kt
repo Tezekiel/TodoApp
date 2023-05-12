@@ -1,25 +1,31 @@
 package com.example.todo.appointments.usecases
 
+import android.util.Log
 import com.example.todo.appointments.dao.AppointmentDao
 import com.example.todo.appointments.dao.model.toDomain
+import com.example.todo.appointments.dao.model.toEntity
 import com.example.todo.appointments.model.Appointment
-import com.example.todo.appointments.model.toEntity
-import kotlinx.coroutines.Dispatchers
+import com.example.todo.appointments.model.AppointmentState
+import com.example.todo.appointments.model.AppointmentState.*
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
 class SaveAppointment(
-  private val dao: AppointmentDao
+  private val dao: AppointmentDao,
+  private val ioDispatcher: CoroutineDispatcher
 ) {
 
   suspend operator fun invoke(new: Appointment): Appointment {
-    return withContext(Dispatchers.IO) {
-      val id = if (new.id < 0) {
-        dao.insert(new.toEntity(true))
-      } else {
-        dao.updateAppointment(new.toEntity())
-        new.id
+    return withContext(ioDispatcher) {
+      when (new.state) {
+        PENDING -> {
+          dao.getById((dao.insert(new.toEntity()))).toDomain()
+        }
+        DONE -> {
+          dao.updateAppointment(new.toEntity())
+          dao.getById(new.id).toDomain()
+        }
       }
-      dao.getById(id).toDomain()
     }
   }
 }

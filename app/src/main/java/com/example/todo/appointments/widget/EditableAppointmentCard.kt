@@ -42,9 +42,7 @@ fun EditableAppointmentCard(
   onDiscard: (Long) -> Unit,
 ) {
   val descriptionDefault =
-    appointment.description.ifBlank {
-      stringResource(R.string.your_appointment_description_goes_here)
-    }
+    appointment.description.ifBlank { stringResource(R.string.your_appointment_description_goes_here) }
   val dateDefault = appointment.date.ifBlank { nowDate() }
   val timeDefault = appointment.time.ifBlank { nowTime() }
   val locationDefault = appointment.location.ifBlank { "" }
@@ -74,7 +72,7 @@ fun EditableAppointmentCard(
       TimePicker(value = time, onValueChange = { time = it }, isEditable = true)
       LocationDropdown(isEditable = true, selectedLocation = location) { location = it }
       Row(horizontalArrangement = Arrangement.SpaceBetween) {
-        IconButton(onClick = { onSave(Appointment(appointment.id, description, location, date, time)) }) {
+        IconButton(onClick = { onSave(Appointment(appointment.id, description, location, date, time,appointment.state)) }) {
           Icon(
             imageVector = Icons.Outlined.Check,
             contentDescription = stringResource(R.string.save_new_appointment_content_desc)
